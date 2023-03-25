@@ -15,6 +15,7 @@ import projects.service.ProjectService;
 public class ProjectsApp {
 	private Scanner scanner = new Scanner(System.in);
 	private ProjectService projectService = new ProjectService();
+	private Project curProject;
 	
 	//@formatter: off
 	private List<String> operations = List.of (
@@ -23,7 +24,7 @@ public class ProjectsApp {
 			"3) Select a project"
 	);
 	//@formatter: on
-	private Object curProject;
+
 
 	public static void main(String[] args) {
 		new ProjectsApp().processUserSelections();
@@ -70,12 +71,12 @@ public class ProjectsApp {
 
 	private void selectProject() {
 		listProjects();
-		Integer projectId = getIntInput ("Enter a project ID to select a project");
+		Integer projectID = getIntInput ("Enter a project ID to select a project");
 		
 		curProject = null;
-		
-		curProject = projectService.fetchProjectById(projectId);
+		curProject = projectService.fetchProjectById(projectID);
 	}
+		
 
 
 	private void listProjects() {
@@ -86,7 +87,7 @@ public class ProjectsApp {
 	}
 	
 	private void createProject() {
-		String projectName = getStringInput("Get project name"); 
+		String projectName = getStringInput("Enter project name"); 
 		BigDecimal estimatedHours = getDecimalInput("Enter the estiamted hours");
 		BigDecimal actualHours = getDecimalInput("Enter the actual hours");
 		Integer difficulty = getIntInput("Enter project difficulty (1-5)");
@@ -115,8 +116,7 @@ public class ProjectsApp {
 		}
 		catch(NumberFormatException e) {
 			throw new DbException(input + " is not a valid decimal number.");
-		}
-		
+		}	
 	}
 
 	private boolean exitMenu() {
@@ -125,10 +125,7 @@ public class ProjectsApp {
 	}
 
 
-	/**
-	 * 
-	 * @return
-	 */
+	
 	private int getUserSelection() {
 		printOperations();
 		
@@ -165,7 +162,7 @@ public class ProjectsApp {
 	
 	
 	private void printOperations() {
-		System.out.println("\nThese are the available selections. Press ENTER key to quit:");
+		System.out.println("\nThese are the available selections. Press the enter key to quit:");
 		
 		operations.forEach(line -> System.out.println("  " + line));
 			

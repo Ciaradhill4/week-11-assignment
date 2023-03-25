@@ -22,7 +22,7 @@ public class ProjectService {
 	}
 
 
-	public Object fetchProjectById(Integer projectId) {
+	public Project fetchProjectById(Integer projectId) {
 		return projectDao.fetchProjectById(projectId).orElseThrow(() -> new NoSuchElementException("Project with project ID =  " + projectId + " does not exist."));
 	}
 
